@@ -78,7 +78,7 @@
                             <a class="nav-link active" href="schedule.php">Schedule</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Logout</a>
+                            <a class="nav-link" href="logout.php" onclick="return confirm('You are being logged out.');">Logout</a>
                         </li>
                     </ul>
                 </div>
