@@ -92,7 +92,7 @@
                             <input type="text" class="form-control form-control-sm" id="id_num" name="id_num" maxlength="15" size="15" placeholder="<?php if($user_type=='student') echo "Enter Student Number"; else echo "Enter Admin Number"; ?>" maxlength="15" size="15" required>
                         </div>
                         <div class="mb-3 mt-3 ms-3 me-3">
-                            <label for="password" class="form-label">Password here pls</label>
+                            <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control form-control-sm" id="password" name="password" placeholder="Enter Password" maxlength="50" size="50" required>
                         </div>
                         <div class="d-grid mb-3 mt-3 ms-3 me-3">
