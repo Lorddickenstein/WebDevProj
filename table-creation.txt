@@ -1,0 +1,136 @@
+// create table containing students' profile
+CREATE TABLE profile_t (
+	stud_num VARCHAR(15) PRIMARY KEY,
+	fname VARCHAR(50),
+	mname VARCHAR(50),
+	lname VARCHAR(50),
+	address VARCHAR(120),
+	age INT,
+	sex VARCHAR(15),
+	email VARCHAR(120),
+	birthday DATE,
+	password VARCHAR(50)
+);
+
+// create table containing the subjects and their schedule
+CREATE TABLE schedule_t (
+	sub_code VARCHAR(11) PRIMARY KEY,
+	sub_desc VARCHAR(120),
+	units INT,
+	sched VARCHAR(150),
+	instructor VARCHAR(120)
+);
+
+// create table for students
+CREATE TABLE student_t (
+	stud_num VARCHAR(15) PRIMARY KEY,
+	section VARCHAR(4),
+	department VARCHAR(4) CHECK (department IN ('BSCS', 'BSIT')),
+	isEnrolled VARCHAR(3) DEFAULT 'No',
+	no_of_subjs INT DEFAULT 0,
+	
+	CONSTRAINT stud_num_fk FOREIGN KEY (stud_num)
+	REFERENCES profile_t (stud_num)
+	ON DELETE CASCADE
+);
+
+// create table for grades of student also keeps record of their enrolled subjects
+CREATE TABLE grade_t (
+	stud_num VARCHAR(15) NOT NULL,
+	sub_code VARCHAR(11) NOT NULL,
+	final_grade DECIMAL(3,2) DEFAULT 0.00,
+	status VARCHAR(1) CHECK (status IN ('P', 'F')),
+	
+	CONSTRAINT grade_pk PRIMARY KEY (stud_num, sub_code),
+	CONSTRAINT stud_num_fk FOREIGN KEY (stud_num) REFERENCES student_t (stud_num) ON DELETE CASCADE,
+	CONSTRAINT sub_code_fk FOREIGN KEY (sub_code) REFERENCES schedule_t (sub_code) ON DELETE CASCADE
+);
+
+ALTER TABLE grade_t
+ADD CONSTRAINT stud_num_fk FOREIGN KEY (stud_num) REFERENCES student_t (stud_num) ON DELETE CASCADE,
+	CONSTRAINT sub_code_fk FOREIGN KEY (sub_code) REFERENCES schedule_t (sub_code) ON DELETE CASCADE;
+	
+CREATE TABLE admin_t (
+	admin_id VARCHAR(15) PRIMARY KEY,
+	fname VARCHAR(50),
+	mname VARCHAR(50),
+	lname VARCHAR(50),
+	address VARCHAR(120),
+	age INT,
+	sex VARCHAR(1),
+	email VARCHAR(120),
+	birthday DATE,
+	password VARCHAR(50)
+);
+
+insert into admin_t VALUES
+    ( '001','Carlo','Garcia','Inovero','Makati City',26,'M','carloinovero@gmail.com','2000-08-04', 'pass001'),
+    ( '002','Rachel','Alonzo','Nayre','Pasig City',24,'F','rachelnayre@gmail.com','2000-09-02', 'pass002'),
+    ( '003','Sherilyn','Barretto','Usero','Laguna City',29,'F','sheusero@gmail.com','2000-03-06', 'pass003'),
+    ( '004','Leo','Toledo','Violeta','Makati City',22,'M','leovioleta@gmail.com','2000-08-10', 'pass004'),
+    ( '005','Michael','Barretto','Dela Fuente','Makati City',24,'M','mikedelafuente@gmail.com','2000-01-04', 'pass005'),
+    ( '006','Melvin','Cruzat','Roxas','Pasay City',28,'M','melvroxas@gmail.com','2000-08-29', 'pass006'),
+    ( '007','Marilou','Fernandez','Novida','Batangas City',27,'F','marilounovida@gmail.com','2000-08-04', 'pass006');
+
+ALTER TABLE grade_t
+drop instructor;
+
+ALTER TABLE grade_t
+ADD admin_id VARCHAR(15) AFTER sub_code;
+
+ALTER TABLE schedule_t
+drop instructor;
+
+ALTER TABLE schedule_t
+add admin_id VARCHAR(15) AFTER sched;
+
+ALTER TABLE schedule_t
+ADD CONSTRAINT admin_fk FOREIGN KEY(admin_id) REFERENCES admin_t(admin_id) ON DELETE CASCADE;
+
+ALTER TABLE grade_t
+ADD CONSTRAINT admin_fk1 FOREIGN KEY(admin_id) REFERENCES admin_t(admin_id) ON DELETE CASCADE;
+
+ALTER TABLE schedule_t
+ADD section VARCHAR(4) after sched;
+
+// gawing primary yung subcode and section sa schedule table bago i-run yung insert statement sa baba
+
+ALTER TABLE schedule_t
+MODIFY section VARCHAR(4) AFTER sub_code
+
+INSERT INTO schedule_t VALUES
+	('COMP 20053', '3-1', 'Information Assurance and Security', 3, 'T/T/F 02:00PM-03:00PM/04:00PM-06:00PM/04:00PM-06:00PM', '001'),
+	('COMP 20053', '3-2', 'Information Assurance and Security', 3, 'T/T/F 07:00AM-08:00AM/09:00AM-11:00AM/09:00AM-11:00AM', '001'),
+	('COMP 20053', '3-3', 'Information Assurance and Security', 3, 'M/M/Th 07:00AM-08:00AM/09:00AM-11:00AM/09:00AM-11:00AM', '001'),
+	('COMP 20053', '3-4', 'Information Assurance and Security', 3, 'M/M/Th 02:00PM-03:00PM/04:00PM-06:00PM/04:00PM-06:00PM', '001'),
+	('COMP 20053', '3P', 'Information Assurance and Security', 3, 'M/M/Th 12:00PM-01:00PM/07:00PM-09:00PM', '001'),
+	('COMP 20173', '3-1', 'Data Communications and Networking', 3, 'S/S 07:30AM-10:30AM/10:30-12:30AM', '004'),
+	('COMP 20173', '3-2', 'Data Communications and Networking', 3, 'M/M 07:30AM-10:30AM/10:30-12:30AM', '004'),
+	('COMP 20173', '3-3', 'Data Communications and Networking', 3, 'T/T 07:30AM-10:30AM/10:30-12:30AM', '004'),
+	('COMP 20173', '3-4', 'Data Communications and Networking', 3, 'W/W 07:30AM-10:30AM/10:30-12:30AM', '004'),
+	('COMP 20173', '3P', 'Data Communications and Networking', 3, 'Th/Th 07:30AM-10:30AM/10:30-12:30AM', '004'),
+	('COMP 20153', '3-1', 'Software Engineering 1', 3, 'W/W/S/S 01:30PM-03:00PM/08:30PM-09:00PM/01:30PM-03:00PM/08:30PM-09:00PM', '006'),
+	('COMP 20153', '3-2', 'Software Engineering 1', 3, 'W/W/S/S 07:30AM-9:00AM/09:30AM-11:00AM/11:30AM-01:00PM/7:30AM-09:00AM', '006'),
+	('COMP 20153', '3-3', 'Software Engineering 1', 3, 'W/W/S/S 09:30AM-11:00AM/7:30AM-09:00AM/09:30AM-11:00AM/03:30PM-04:00PM', '006'),
+	('COMP 20153', '3-4', 'Software Engineering 1', 3, 'M/M/T/T 07:30AM-9:00AM/09:30AM-11:00AM/11:30AM-01:00PM/7:30AM-09:00AM', '006'),
+	('COMP 20153', '3P', 'Software Engineering 1', 3, 'M/M/T/T 09:30AM-11:00AM/7:30AM-09:00AM/09:30AM-11:00AM/03:30PM-04:00PM', '006'),
+	('COMP 20163', '3-1', 'Web Development', 3, 'Th/F 03:00PM-6:00PM/02:30PM-4:30PM', '007'),
+	('COMP 20163', '3-2', 'Web Development', 3, 'Th/F 12:00PM-03:00PM/12:30PM-2:30PM', '007'),
+	('COMP 20163', '3-3', 'Web Development', 3, 'Th/F 07:30AM-10:30AM/07:30AM-9:30AM', '007'),
+	('COMP 20163', '3-4', 'Web Development', 3, 'Th/F 10:30AM-01:30PM/9:30AM-11:30AM', '007'),
+	('COMP 20163', '3P', 'Web Development', 3, 'F 11:30AM-01:30PM', '007'),
+	('COSC 30073', '3-1', 'Introduction to Artificial Intelligence', 3, 'T/F 03:30PM-5:30PM/04:30PM-7:30PM', '005'),
+	('COSC 30073', '3-2', 'Introduction to Artificial Intelligence', 3, 'T/F 5:30PM-7:30PM/7:30PM-09:00PM', '005'),
+	('COSC 30073', '3-3', 'Introduction to Artificial Intelligence', 3, 'T/F 7:30PM-09:00PM/01:30-4:30', '005'),
+	('COSC 30073', '3-4', 'Introduction to Artificial Intelligence', 3, 'T/F 1:30PM-3:30PM/07:30AM-10:30AM', '005'),
+	('COSC 30073', '3P', 'Introduction to Artificial Intelligence', 3, 'T/F 7:30AM-10:30AM/10:30AM-1:30PM', '005'),
+	('COSC 40013', '3-1', 'CS Thesis Writing', 3, 'Th 07:30AM-12:30AM', '003'),
+	('COSC 40013', '3-2', 'CS Thesis Writing', 3, 'M 07:30AM-12:30PM', '003'),
+	('COSC 40013', '3-3', 'CS Thesis Writing', 3, 'M 12:00NN-05:00PM', '003'),
+	('COSC 40013', '3-4', 'CS Thesis Writing', 3, 'T 07:30AM-12:30PM', '003'),
+	('COSC 40013', '3P', 'CS Thesis Writing', 3, 'T 12:00NN-05:00PM', '003'),
+	('COSC-E2', '3-1','CS Elective', 3, 'Th 07:00AM-12:00NN', '002'),
+	('COSC-E2', '3-2','CS Elective', 3, 'M 07:00AM-12:00NN', '002'),
+	('COSC-E2', '3-3','CS Elective', 3, 'M 01:30PM-06:30PM', '002'),
+	('COSC-E2', '3-4','CS Elective', 3, 'T 07:00AM-12:00NN1', '002'),
+	('COSC-E2', '3P','CS Elective', 3, 'T 01:30PM-06:00PM', '002');

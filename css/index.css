@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  font-family: 'Poppins', sans-serif;
+}
+body {	
+    background-image: url("../images/pup_gate.jpg");
+	background-size: cover;
+	background-attachment: fixed;
+    background-position: center;
+}
+
+input[type="email"]::placeholder{
+    text-align: right;
+}
+
+input[type=text], input[type=password], input[type=email],input[type=date]{
+    width : 350px;
+    padding : 12px 20px;
+    margin: 8px 18px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align : left;
+    background-color: ghostwhite;
+}
+
+input[type=number] {
+    width: 100px;
+    padding: 12px 20px;
+    margin: 8px 18px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+input[type=submit]{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+}
+input[type=reset]{
+    background-color: DarkRed;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: auto;
+}
+form {
+    text-align: center;
+    border: 3px solid #f1f1f1;
+    background-color: rgba(255,255,255, 0.7);
+    width : 45%;
+    margin : auto;
+	box-shadow: 0 10px 15px rgba(0,0,0,1);
+    font-weight: bold;
+}
+input[type=radio]{
+    margin: 0px 18px;
+    font-weight: normal;
+}
+div{
+    padding: 10px ;
+    width : 450px;
+    margin : auto;
+    text-align : left;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.font-Poppins{
+    font-family: 'Poppins',sans-serif;
+}
+
+.error{
+    color:red;
+}
+
+.create{
+	text-shadow: 0 5px 5px rgba(0,0,0,0.25);
+}
+
+.sex{
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#footer{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+	text-shadow: 2px 2px black;
+}
