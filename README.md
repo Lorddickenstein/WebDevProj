@@ -1,5 +1,5 @@
 # WebDevProj
-## Project in Web Dev A.Y. 2020-2021
+Project in Web Dev A.Y. 2020-2021
 
 This is an online student information system called Polytechnic University of the PUP (notice that it's a recursive definition, just like PHP) that took a lot of inspiration from the official PUP (Polytechnic University of the Philippines) Website. It records all information about the students that are enrolled in the University as well as the "admins" or the PUP instructors. You can either log-in as a student or as an admin, each with their own different interaction with the website. A student can enroll a subject and a professor, while an admin can edit grades for every student that is enrolled to that admin.
 
